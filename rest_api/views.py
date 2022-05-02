@@ -1,5 +1,7 @@
 # from django.shortcuts import render
 from rest_framework import viewsets, permissions
+from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer, BrowsableAPIRenderer
+
 from .serializers import PenSerializer, SnailsActivitySerializer, SnailsInventorySerializer, \
     EggsInventorySerializer, StocksTransferSerializer
 from .models import Pen, SnailsActivity, SnailsInventory, EggsInventory, StocksTransfer
@@ -29,6 +31,7 @@ class SnailsActivityViewSet(viewsets.ModelViewSet):
     """
     queryset = SnailsActivity.objects.all().order_by('-dateTimeRecorded')
     serializer_class = SnailsActivitySerializer
+    # renderer_classes = [BrowsableAPIRenderer]
 
 
 class SnailsCurrentInventoryViewSet(viewsets.ModelViewSet):

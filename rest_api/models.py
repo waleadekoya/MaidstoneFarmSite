@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.utils import timezone
 from django.db import models
+from rest_framework import serializers
 
 
 # Create your models here.

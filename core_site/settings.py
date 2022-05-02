@@ -14,6 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+print(f"Base DIR is: {BASE_DIR}")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -22,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-vpzu)j8@!9^ho^$8_6999y+()xq2k5=hoyx75)6h3*k-da6f%u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*", "192.168.1.110", "0.0.0.0"]
 
@@ -57,7 +58,12 @@ ROOT_URLCONF = 'core_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [Path(BASE_DIR, 'front_end'), ],
+        'DIRS': [
+            BASE_DIR,
+            Path(BASE_DIR, 'front_end', 'templates'),
+            Path(BASE_DIR, 'rest_api' 'templates'),
+            Path(BASE_DIR, 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -66,6 +72,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            # 'loaders': [
+            #     'django.template.loaders.filesystem.Loader',
+            #     'django.template.loaders.app_directories.Loader'
+            # ],
         },
     },
 ]
@@ -114,7 +124,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -123,7 +132,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 50
+    'PAGE_SIZE': 50,
+    # 'DEFAULT_RENDERER_CLASSES': [
+    #     'rest_framework.renderers.JSONRenderer',
+    #     'rest_framework.renderers.BrowsableAPIRenderer',
+    # ]
 }
 
 # DIRS = [
@@ -131,6 +144,20 @@ REST_FRAMEWORK = {
 #
 # ]
 
+STATIC_URL = "/static/"
+# STATIC_FILE_ROOT = Path(BASE_DIR, "front_end/static/")
 STATICFILES_DIRS = [
-    Path(BASE_DIR, 'front_end/static/'),
+    Path(BASE_DIR, "front_end/static/"),
+    # Path(BASE_DIR, 'rest_api/static/'),
 ]
+
+STATIC_ROOT = Path(BASE_DIR, 'templates/static')  # tells Django where to put the files after collection
+# https://www.kite.com/blog/python/django-static-files-templates-how-to/
+
+print(f"Static DIR is: {Path(BASE_DIR, 'front_end/static')}")
+print(f"rest framework static DIR is: {Path(BASE_DIR, 'rest_api/static')}")
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)

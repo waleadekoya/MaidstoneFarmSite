@@ -2,10 +2,14 @@ from datetime import datetime
 
 from django.db.models import Max, Q, Sum, DateField, QuerySet, Avg
 from django.db.models.functions import Cast
-from django.http import JsonResponse, Http404
+from django.http import JsonResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
 
+from front_end.forms import SnailActivityForm
 from rest_api.models import SnailsActivity, SnailsInventory, EggsInventory, Pen
+from rest_api.serializers import SnailsActivitySerializer
 
 
 def getMaxDate():
@@ -23,6 +27,36 @@ def activitySnapshot() -> QuerySet:
                   avgFeedConsumptionRate=Avg('feedConsumptionRate'),
                   totalCountRebase=Sum('snailReshuffle')) \
         .order_by('date')
+
+
+def create_new_activity(request):
+    """
+    Create a new activity.
+    """
+    if request.method == "POST":
+        form = SnailActivityForm(request.POST or None)
+        if form.is_valid():
+            data = SnailsActivity(**form.cleaned_data)
+            data.save()
+            return JsonResponse(SnailsActivitySerializer(data).data, safe=False)
+        else:
+            return HttpResponseRedirect(redirect_to="frontend:activity")
+
+    # elif request.method == "GET":
+    #     snails_activity = SnailsActivity.objects.all().order_by('-dateTimeRecorded')
+    #     serializer = SnailsActivitySerializer(snails_activity, many=True)
+    #     return JsonResponse(serializer.data, safe=False)
+
+    # elif request.method == "POST":
+    #     data = JSONParser().parse(request)
+    #     serializer = SnailsActivitySerializer(data=data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return JsonResponse(serializer.data, status=201)
+    #     return JsonResponse(serializer.errors, status=400)
+    else:
+        form = SnailActivityForm()  # An unbound form
+        return render(request, 'activity-form.html', {"form": form})
 
 
 def activity_summary(request):

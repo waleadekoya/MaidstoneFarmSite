@@ -4,6 +4,7 @@ from . import views
 
 app_name = 'frontend'
 urlpatterns = [
+    # path('snails/activity/', views.create_new_activity, name='activity'),
     path('snails/activity/detail/', views.activity_detail, name='activity-detail'),
     path('snails/activity/detail/<int:year>/<int:month>/<int:day>', views.activity_detail_by_date,
          name='activity-by-date'),

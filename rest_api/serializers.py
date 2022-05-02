@@ -22,7 +22,7 @@ class EggsInventorySerializer(serializers.HyperlinkedModelSerializer):
         fields = '__all__'
 
 
-class SnailsActivitySerializer(serializers.HyperlinkedModelSerializer):
+class SnailsActivitySerializer(serializers.ModelSerializer):
     class Meta:
         model = SnailsActivity
         fields = '__all__'
@@ -30,6 +30,9 @@ class SnailsActivitySerializer(serializers.HyperlinkedModelSerializer):
         #           'newEggsCollected', 'newBabySnails', 'damagedEggsCount', 'snailReshuffle']
 
     def create(self, validated_data):
+        """
+        Create and return a new `SnailsActivity` instance, given the validated data.
+        """
         return SnailsActivity.objects.create(**validated_data)
 
 
