@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pens</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+</head>
+<body>
+{#{% render_table data %}#}
+
+<hr>
+<div class="container-fluid">
+    <h2 class="text-left"><u>Pens Table</u></h2><br>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th> number</th>
+            <th> size</th>
+            <th> created_date</th>
+            <th> modified_date</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for record in data %}
+            <tr>
+                <td> {{ record.number }} </td>
+                <td> {{ record.size }} </td>
+                <td> {{ record.created_date }} </td>
+                <td> {{ record.modified_date }} </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

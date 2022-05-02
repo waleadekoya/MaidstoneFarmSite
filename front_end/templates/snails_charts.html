@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
+</head>
+<body>
+
+<canvas id="mortalitiesGraph" data-url="{% url 'graphs' %}"></canvas>
+
+<script>
+    let ctx = document.getElementById('mortalitiesGraph').getContext('2d');
+
+    const config = {
+        type: 'bar',
+        data: {
+            datasets: [{
+                data: {{ data|safe }},
+                backgroundColor: ['#696969', '#808080', '#A9A9A9', '#C0C0C0', '#D3D3D3'],
+                label: 'Mortalities',
+            }],
+            labels: {{ labels|safe }}
+        },
+        options: {
+            responsive: true,
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Mortalities Bar Chart'
+            }
+        }
+    };
+
+    let mortalitiesChart = new Chart(ctx, config);
+
+
+</script>
+</body>
+</html>

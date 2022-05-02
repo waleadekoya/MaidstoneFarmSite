@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Snails Activity</title>
+    {#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>#}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+
+</head>
+<body>
+{#{% render_table data %}#}
+
+<hr>
+<div class="container-fluid">
+    <h3 class="text-left"><u>Activity Summary as at <span id="date"> {{ max_date }}</span></u></h3><br>
+    <table class="table table-striped table-hover" id="managerTable">
+        <thead>
+        <tr>
+            <th> activityDate</th>
+            <th> totalMortalities</th>
+            <th> avgFeedConsumptionRate</th>
+            <th> totalEggsCollected</th>
+            <th> totalBabySnails</th>
+            <th> totalNewStocks</th>
+            <th> totalDamagedEggsCount</th>
+            <th> recountCorrections</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for record in data %}
+            <tr>
+                {#                <td> {{ record.date }} </td>#}
+                <td>
+                    <a href="{% url 'frontend:activity-by-date' year=record.date.year month=record.date.month day=record.date.day %}"> {{ record.date }} </a>
+                </td>
+                <td> {{ record.totalMortalities }} </td>
+                <td> {{ record.avgFeedConsumptionRate|floatformat:1 }}</td>
+                <td> {{ record.totalEggsCollected }} </td>
+                <td> {{ record.totalBabySnails }} </td>
+                <td> {{ record.totalNewBreederStocks }} </td>
+                <td> {{ record.totalDamagedEggsCount }} </td>
+                <td> {{ record.totalCountRebase }} </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td><strong> Grand Totals </strong></td>
+            <td><strong>{{ grandTotals.totalMortalities__sum }} </strong></td>
+            <td><strong> </strong></td>
+            <td><strong>{{ grandTotals.newEggsCollected__sum }} </strong></td>
+            <td><strong>{{ grandTotals.newBabySnails__sum }} </strong></td>
+            <td><strong>{{ grandTotals.newBreederStocks__sum }} </strong></td>
+            <td><strong>{{ grandTotals.damagedEggsCount__sum }} </strong></td>
+            <td><strong>{{ grandTotals.snailReshuffle__sum }} </strong></td>
+
+            {#            <td><strong>{{ grandTotals.feedConsumptionRate__avg }} </strong></td>#}
+        </tr>
+        </tbody>
+        {#        <script> getMortalities(); </script>#}
+        {#                {% with eggsData = getEggsSnapshot() %}#}
+        {#                {% endwith %}#}
+    </table>
+</div>
+<script src="{% static 'common.js' %}"></script>
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>#}
+
+</body>
+
+</html>
