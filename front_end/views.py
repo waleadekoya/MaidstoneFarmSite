@@ -126,6 +126,17 @@ def inventory_snapshot(request):
                                                           grandTotals=totals, isSnapshot=True))
 
 
+def inventory_snapshot_by_staff(request, staff):
+    # penNumber.responsible.name
+    query = getInventorySnapshot().filter(totalCount__gt=0).filter(Q(penNumber__responsible__name=staff))
+    totals = query.aggregate(Sum('totalCount'))['totalCount__sum']
+    eggsCount = getEggsSnapshot().filter(Q(penNumber__responsible__name=staff)).aggregate(Sum('totalCount'))[
+        'totalCount__sum']
+    return render(request, 'inventory.html', context=dict(data=query, max_date=datetime.now(),
+                                                          eggsCount=eggsCount,
+                                                          grandTotals=totals, isSnapshot=True))
+
+
 def inventory_by_specie(request):
     data = getInventorySnapshot().filter(totalCount__gt=0)
     dataAggregatesBySpecie = data.values('specieType').annotate(specieSum=Sum('totalCount')).order_by()

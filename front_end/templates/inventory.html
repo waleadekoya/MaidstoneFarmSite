@@ -55,7 +55,9 @@
                     <a href="{% url 'frontend:inventory-detail-by-pen' pen=record.penNumber.number %}"> {{ record.penNumber.number }} </a>
                 </td>
                 {#                <td> {{ record.specieType.specie }} </td>#}
-                <td> {{ record.penNumber.responsible.name }} </td>
+                <td>
+                    <a href="{% url 'frontend:inventory-snapshot-staff' staff=record.penNumber.responsible.name %}"> {{ record.penNumber.responsible.name }}</a>
+                </td>
                 <td class="text-center"> {{ record.totalCount }} </td>
 
                 {% if record.comments %}

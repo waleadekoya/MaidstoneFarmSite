@@ -13,6 +13,7 @@ urlpatterns = [
     path('snails/inventory/detail/', views.inventory_detail, name='inventory-detail'),
     path('snails/inventory/detail/<pen>', views.inventory_detail_by_pen, name='inventory-detail-by-pen'),
     path('snails/inventory/snapshot/', views.inventory_snapshot, name='inventory-snapshot'),
+    path('snails/inventory/snapshot/<staff>', views.inventory_snapshot_by_staff, name='inventory-snapshot-staff'),
     path('snails/inventory/snapshot/all', views.inventory_snapshot_all, name='inventory-snapshot-all'),
     path('snails/inventory/specie/', views.inventory_by_specie, name='inventory-specie'),
     path('eggs/inventory/activities', views.eggs_inventory_activities, name='eggs-inventory-activities'),
