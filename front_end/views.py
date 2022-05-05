@@ -4,8 +4,6 @@ from django.db.models import Max, Q, Sum, DateField, QuerySet, Avg
 from django.db.models.functions import Cast
 from django.http import JsonResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import JSONParser
 
 from front_end.forms import SnailActivityForm
 from rest_api.models import SnailsActivity, SnailsInventory, EggsInventory, Pen
